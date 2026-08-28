@@ -2,6 +2,11 @@ name: CI
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
 
 jobs:
   test:
@@ -15,3 +20,21 @@ jobs:
 
       - name: Run tests
         run: echo "Tests passed"
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build application
+        run: |
+          mkdir -p dist
+          cp src/index.html dist/index.html
+  deploy-demo:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: echo "Deploying application"
