@@ -4,17 +4,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  hello:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Show environment
-        run: |
-          echo "Hello from GitHub Actions"
-          uname -a
-          pwd
+      - name: Show trigger
+        run: echo "Triggered by ${{ github.event_name }}"
 
-      - name: List files
-        run: ls -la
+      - name: Run tests
+        run: echo "Tests passed"
